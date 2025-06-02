@@ -1,0 +1,48 @@
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head>
+	<title>main title</title>
+</head>
+
+<body>
+	<!--   웹주소 : http://localhost:8080/main
+      templates : html
+      static : 이미지, css, js, uploadPath
+-->
+	<h1>templates/member/main.html</h1>
+
+	<span sec:authentication="principal"></span><br>
+
+	===================================<br>
+	<div sec:authorize="isAnonymous()">
+		<a href="/login">로그인</a><br>
+		<a href="/insert">회원가입</a><br>
+	</div>
+
+	<div sec:authorize="isAuthenticated()">
+
+		<span sec:authentication="name"></span>님 로그인
+		<a href="/logout">로그아웃</a><br>
+
+		<a href="/info">나의 정보 조회</a><br>
+
+		<a href="/update">나의 정보 수정</a><br>
+
+		<a href="/delete">나의 정보 삭제</a><br>
+
+		<!--<div th:if="${#authentication.principal.Username == 'admin'}">-->
+		<div sec:authorize="hasRole('ADMIN')">
+			<a href="/list">회원목록</a><br>
+		</div>
+
+	</div>
+	===================================<br>
+
+	<a href="/board/write">게시판 글쓰기</a><br>
+	<a href="/board/list">게시판 글목록</a><br>
+	<a href="/board/fwrite">파일 게시판 글쓰기</a><br>
+
+
+</body>
+
+</html>

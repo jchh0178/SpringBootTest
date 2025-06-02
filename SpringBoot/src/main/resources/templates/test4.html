@@ -1,0 +1,31 @@
+<html>
+
+<head>
+	<title>test3 title</title>
+</head>
+
+<body>
+<!--	웹주소 : http://localhost:8080/	
+		templates : html
+		static : 이미지, css, js, uploadPath
+-->
+	<h1>templates/test3.html</h1>
+	
+	<a href="http://www.thymeleaf.org">thymeleaf 홈페이지 이동</a><br>
+	<a th:href="@{/test3}">test3 페이지 이동</a><br>
+	
+<!--	http://localhost:8080/test5?id=kim&pass=p123	-->
+	<a th:href="@{/test5(id='kim',pass='p123',name='김길동')}">test5 페이지 이동</a><br>
+	
+	<table border="1">
+		<tr><td>아이디</td><td>비밀번호</td><td>이름</td></tr>
+		
+		<t th:each="memberDTO, status:${memberList}">
+			<td><span th:text="${memberDTO.id}"></span></td>
+			<td><span th:text="${memberDTO.pass}"></span></td>
+			<td><span th:text="${memberDTO.name}"></span></td>
+		</tr>
+	</table>
+</body>
+
+</html>

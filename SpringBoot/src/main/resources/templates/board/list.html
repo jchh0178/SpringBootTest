@@ -1,0 +1,84 @@
+<html>
+
+<head>
+	<title>list title</title>
+</head>
+
+<body>
+<!--	웹주소 : http://localhost:8080/board/list
+		templates : html
+		static : 이미지, css, js, uploadPath
+-->
+	<h1>templates/board/list.html</h1>
+	<table border="1">
+		<tr><td>글번호</td><td>작성자</td><td>제목</td><td>작성일</td><td>조회수</td></tr>
+		
+		<tr th:each="boardDTO, status:${boardList}">
+			<td><span th:text="${boardDTO.num}"></span></td>
+			<td><span th:text="${boardDTO.name}"></span></td>
+			<td><span>
+				<a th:href="@{/board/content(num=${boardDTO.num})}"
+				               th:text="${boardDTO.subject}"></a>
+			</span></td>
+			<td><span th:text="${boardDTO.rdate}"></span></td>
+			<td><span th:text="${boardDTO.readcount}"></span></td>
+		</tr>
+	</table>
+	
+<!--이전-->
+	<a th:href="@{/board/list(page=${currentPage - 1})}" 
+	th:if="${currentPage > 1}" th:text="[이전]"></a>	
+
+<!--1 ~ 10-->
+<!--#numbers.sequence(startPage,endPage) 타임리프 객체.함수()-->
+	<span th:each="page:${#numbers.sequence(startPage,endPage)}">
+		
+		<span th:if="${page == currentPage}" th:text="${page}"></span>
+		
+		<span th:unless="${page == currentPage}">
+			<a th:href="@{/board/list(page=${page})}" th:text="${page}"></a>
+		</span>
+		
+	</span>
+<!--다음-->
+	<a th:href="@{/board/list(page=${currentPage + 1})}" 
+	th:if="${currentPage < totalPages}" th:text="[다음]"></a>	<br>
+	
+	<a href="/board/write">게시판 글쓰기</a><br>
+	<a href="/main">main 이동</a><br>
+	
+	<a href="#" id="board_list">최근 10개 글목록</a><br>
+	   <table border="1" id="table_list">
+	      <tr><td>글번호</td><td>글제목</td><td>글쓴이</td><td>글쓴날짜</td><td>조회수</td></tr>
+		  
+	   
+	   </table>
+	   
+	   <script src="/js/jquery-3.7.1.js"></script>
+	   <script>
+	      $(function(){
+	         // alert("불러옴");
+			 // id="board_list" 클릭했을때
+		  $('#board_list').click(function(){
+			 // alert("클릭");
+			 // ajax => /board/listJson
+			 $.ajax({
+				type:"GET",
+				url:'/board/listJson',
+				dataType:'json',
+				success : function(result){
+					$.each(result, function(index,item){
+						// id="table_list"
+						// 자바스크립트 백틱(`) ES6
+						$('#table_list').append('<tr><td>' + item.num + '</td><td>' + item.subject + '</td><td>' + item.name + '</td><td>' + item.rdate + '</td><td>' + item.readcount + '</td></tr>')
+					});
+				}
+			 });
+		  });
+			 
+	      });
+	   </script>
+	
+</body>
+
+</html>

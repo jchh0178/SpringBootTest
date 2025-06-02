@@ -1,0 +1,20 @@
+<html>
+
+<head>
+	<title>login title</title>
+</head>
+
+<body>
+<!--	웹주소 : http://localhost:8080/login
+		templates : html
+		static : 이미지, css, js, uploadPath
+-->
+	<h1>templates/member/login.html</h1>
+	<form th:action="@{/loginPro}" method="post">
+		아이디 : <input type="text" name="id"><br>
+		비밀번호 : <input type="password" name="pass"><br>
+		<input type="submit" value="로그인">
+	</form>
+</body>
+
+</html>

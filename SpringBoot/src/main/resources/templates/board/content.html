@@ -1,0 +1,33 @@
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+   <title>content title</title>
+</head>
+
+<body>
+   <!--   웹주소:   http://localhost:8080/board/content
+         templates : html
+         static : 이미지, css, js, uploadPath
+      -->
+   <h1>templates/board/content.html</h1>
+   글번호 : <span th:text="${boardDTO.num}"></span><br>
+   글쓴이 : <span th:text="${boardDTO.name}"></span><br>
+   글제목 : <span th:text="${boardDTO.subject}"></span><br>
+   글내용 : <span th:text="${boardDTO.content}"></span><br>
+   조회수 : <span th:text="${boardDTO.readcount}"></span><br>
+   가입날짜 : <span th:text="${boardDTO.rdate}"></span><br>
+   
+   파일 : <span><a th:href="@{/uploadPath/{boardId}(boardId=${boardDTO.file})}" 
+               th:text="${boardDTO.file}" download></a>
+            <img th:src="@{/uploadPath/{boardId}(boardId=${boardDTO.file})}">
+   </span><br>
+
+   <span th:if="${#authentication.principal.Username == boardDTO.name}">
+      <a th:href="@{/board/update(num=${boardDTO.num})}" th:text="글수정"></a>
+      <a th:href="@{/board/delete(num=${boardDTO.num})}" th:text="글삭제"></a>
+   </span>
+   <a href="/board/list">글목록 이동</a><br>
+
+</body>
+
+</html>

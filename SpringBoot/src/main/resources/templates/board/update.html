@@ -1,0 +1,27 @@
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<title>update title</title>
+</head>
+
+<body>
+<!--	웹주소 : http://localhost:8080/update
+		templates : html
+		static : 이미지, css, js, uploadPath
+-->
+	<h1>templates/board/update.html</h1>
+	<form action="/board/updatePro" method="post">
+		<input type="hidden" name="readcount" th:value="${boardDTO.readcount}"><br> 
+		<input type="hidden" name="rdate" th:value="${boardDTO.rdate}"><br> 
+		
+		글번호 : <input type="text" name="num" th:value="${boardDTO.num}" readonly><br>
+		이름 : <input type="text" name="name" th:value="${boardDTO.name}" readonly><br>
+		제목 : <input type="text" name="subject" th:value="${boardDTO.subject}"><br>
+		내용 : <textarea name="content" rows="5" cols="10" th:text="${boardDTO.content}"></textarea><br>
+		<input type="hidden" th:name="${_csrf?.parameterName}"
+											 th:value="${_csrf?.token}">
+		<input type="submit" value="글수정">
+	</form>
+</body>
+
+</html>

@@ -1,0 +1,75 @@
+<html>
+
+<head>
+	<title>list title</title>
+</head>
+
+<body>
+<!--	웹주소 : http://localhost:8080/list
+		templates : html
+		static : 이미지, css, js, uploadPath
+-->
+	<h1>templates/member/list.html</h1>
+	<table border="1">
+		<tr><td>아이디</td><td>비밀번호</td><td>이름</td></tr>
+		
+		<t th:each="memberDTO, status:${memberList}">
+			<td><span th:text="${memberDTO.id}"></span></td>
+			<td><span th:text="${memberDTO.pass}"></span></td>
+			<td><span th:text="${memberDTO.name}"></span></td>
+		</tr>
+	</table>
+	
+	<!--이전-->
+	<a th:href="@{/list(page=${currentPage - 1})}" 
+	th:if="${currentPage > 1}" th:text="[이전]"></a>	
+
+	<!--1 ~ 10-->
+	<!--#numbers.sequence(startPage,endPage) 타임리프 객체.함수()-->
+	<span th:each="page:${#numbers.sequence(startPage,endPage)}">
+			
+		<span th:if="${page == currentPage}" th:text="${page}"></span>
+		
+		<span th:unless="${page == currentPage}">
+			<a th:href="@{/list(page=${page})}" th:text="${page}"></a>
+		</span>
+		
+	</span>
+	<!--다음-->
+	<a th:href="@{/list(page=${currentPage + 1})}" 
+	th:if="${currentPage < totalPages}" th:text="[다음]"></a>	<br>
+	
+	<a href="/main">main 이동</a><br>
+	
+	<a href="#" id="member_list">전체 회원</a><br>
+		<table border="1" id="table_list">
+			<tr><td>아이디</td><td>비밀번호</td><td>이름</td></tr>
+		</table>
+		
+		<script src="/js/jquery-3.7.1.js"></script>
+		<script>
+			$(function(){
+		    	// alert("불러옴");
+				// id="board_list" 클릭했을때
+			$('#member_list').click(function(){
+				// alert("클릭");
+				// ajax => /board/listJson
+				$.ajax({
+					type:"GET",
+					url:'/listJson',
+					dataType:'json',
+					success : function(result){
+						$.each(result, function(index,item){
+							// id="table_list"
+							$('#table_list').append('<tr><td>' + item.id + '</td><td>' + item.pass + '</td><td>' + item.name + '</td></tr>')
+						});
+					}
+				 });
+			  });
+					 
+			 });
+		</script>
+	
+</body>
+
+</html>
